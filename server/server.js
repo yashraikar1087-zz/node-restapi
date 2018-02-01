@@ -23,9 +23,9 @@ app.post('/todos',(req,res)=>{
 });
 
 app.get('/todos',(req,res)=>{
-    Todo.find().then((result)=>{
+    Todo.find().then((todos)=>{
         res.send({
-            result
+            todos
         });
     },(error)=>{
         res.status(400).send(e);

@@ -8,7 +8,7 @@ var UserSchema=new mongoose.Schema({
     email:{
         type:String,
         required:true,
-        minLength:1,
+        minlength:1,
         trim:true,
         unique:true,
         validate:{
@@ -19,7 +19,7 @@ var UserSchema=new mongoose.Schema({
     password:{
         type:String,
         require:true,
-        minLength:6
+        minlength:6
     },
     tokens:[{
         access:{
@@ -69,6 +69,18 @@ UserSchema.statics.findByToken=function(token){
         'tokens.access':'auth'
     });
 }
+
+UserSchema.methods.removeToken=function(token){
+    var user=this;
+
+    return user.update({
+        $pull:{
+            tokens:{
+                token
+            }
+        }
+    });
+};
 
 UserSchema.statics.findByCredentials=function(email,password){
     var User=this;
